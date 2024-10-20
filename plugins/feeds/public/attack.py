@@ -216,6 +216,8 @@ class MitreAttack(task.FeedTask):
                             continue
                         object_temp = TYPE_FUNCTIONS[subdir](item)
                         tags = item.get("aliases", [item["name"]])
+                        if len(tags) >= 50:
+                            tags = tags[:50]
                         object_temp.tag(tags)
                         object_cache[item["id"]] = TYPE_FUNCTIONS[item["type"]](item)
                         obj_count += 1

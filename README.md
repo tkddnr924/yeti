@@ -1,4 +1,4 @@
-# Yeti Platform
+# Yeti Platform (tkddnr924)
 
 Yeti aims to bridge the gap between CTI and DFIR practitioners by providing a
 Forensics Intelligence platform and pipeline for DFIR teams. It was born out of frustration
