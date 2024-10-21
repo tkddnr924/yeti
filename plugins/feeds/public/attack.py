@@ -186,13 +186,17 @@ class MitreAttack(task.FeedTask):
     }
 
     def run(self):
+        logging.info(f"[tkddnr924] MitreAttack - run")
         response = self._make_request(
             f"https://github.com/mitre/cti/archive/refs/tags/ATT&CK-{_VERSION}.zip"
         )  # url is fixed because the code works with this version only
+        
+        logging.info(f"[tkddnr924] MitreAttack - response")
         if not response:
             logging.info("No response: skipping MitreAttack update")
             return
 
+        logging.info(f"[tkddnr924] MitreAttack - zip file")
         tempdir = tempfile.TemporaryDirectory()
         ZipFile(BytesIO(response.content)).extractall(path=tempdir.name)
         enterprise_attack = os.path.join(
@@ -201,6 +205,7 @@ class MitreAttack(task.FeedTask):
 
         object_cache = {}
 
+        logging.info(f"[tkddnr924] MitreAttack - subdir")
         for subdir in TYPE_FUNCTIONS:
             logging.info("Processing %s", subdir)
             obj_count = 0
@@ -216,13 +221,6 @@ class MitreAttack(task.FeedTask):
                             continue
                         object_temp = TYPE_FUNCTIONS[subdir](item)
                         tags = item.get("aliases", [item["name"]])
-
-                        print(f"[TKDDNR] {tags}")
-                        print(type(tags))
-                        print(dir(tags))                    
-
-                        if len(tags) >= 50:
-                            tags = tags[:50]
                         object_temp.tag(tags)
                         object_cache[item["id"]] = TYPE_FUNCTIONS[item["type"]](item)
                         obj_count += 1
