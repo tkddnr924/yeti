@@ -39,21 +39,21 @@ class ArangoHandler(logging.Handler):
         else:
             status = "failed"
 
-        if "body" in record.__dict__ and record.__dict__["body"]:
-            try:
-                content = json.loads(record.__dict__["body"].decode("utf-8"))
-            except (UnicodeDecodeError, json.JSONDecodeError):
-                # We don't want to log binary or non-JSON content.
-                content = {}
-        else:
-            content = {}
+        # if "body" in record.__dict__ and record.__dict__["body"]:
+        #     try:
+        #         content = json.loads(record.__dict__["body"].decode("utf-8"))
+        #     except (UnicodeDecodeError, json.JSONDecodeError):
+        #         # We don't want to log binary or non-JSON content.
+        #         content = {}
+        # else:
+        #     content = {}
         AuditLog(
             timestamp=datetime.datetime.fromtimestamp(record.created),
             username=record.__dict__["username"],
             action=action,
             status=status,
             target=target,
-            content=content,
+            content={"msg": "tkddnr924 - test"},
             status_code=record.__dict__["status_code"],
             ip=record.__dict__["client"],
         ).save()
