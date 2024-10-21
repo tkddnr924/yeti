@@ -216,6 +216,11 @@ class MitreAttack(task.FeedTask):
                             continue
                         object_temp = TYPE_FUNCTIONS[subdir](item)
                         tags = item.get("aliases", [item["name"]])
+
+                        print(f"[TKDDNR] {tags}")
+                        print(type(tags))
+                        print(dir(tags))                    
+
                         if len(tags) >= 50:
                             tags = tags[:50]
                         object_temp.tag(tags)
